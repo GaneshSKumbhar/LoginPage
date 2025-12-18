@@ -62,11 +62,11 @@ A simple web-based Notes App that allows users to log in via email/password or G
 ## Screenshots
 
 ### Login Page
-![Login Page](![Login page](image.png))
+![Login Page](![alt text](image.png))
 *Description: The login page with email/password fields and Google sign-in option.*
 
 ### Dashboard
-![Dashboard](![Dashboard page](image-1.png))
+![Dashboard](![alt text](image-1.png))
 *Description: The dashboard displaying sample notes after successful login.*
 
 ## Usage
