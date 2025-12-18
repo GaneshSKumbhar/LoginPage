@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Notes App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+    }
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 30px; background: rgba(255,255,255,0.1); color: #fff; backdrop-filter: blur(10px);
+    }
+    .navbar h1 { margin: 0; font-size: 22px; font-weight: 600; }
+    .navbar button {
+      background: #fff; color: #764ba2; border: none; padding: 8px 16px; border-radius: 8px;
+      cursor: pointer; font-weight: 600; transition: 0.3s;
+    }
+    .navbar button:hover { background: #f5f5f5; }
+    .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+    .welcome-msg { color: #fff; font-size: 28px; font-weight: 600; margin-bottom: 25px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .card {
+      background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
+    .card h3 { margin: 0 0 10px 0; font-size: 18px; color: #333; }
+    .card p { font-size: 14px; color: #666; line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <h1>Notes Dashboard</h1>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <div class="container">
+    <div class="welcome-msg" id="welcomeMsg">Welcome, User!</div>
+    <div class="cards">
+      <div class="card"><h3>Note 1</h3><p>This is a sample note. You can add more notes here.</p></div>
+      <div class="card"><h3>Note 2</h3><p>Another note with some sample content.</p></div>
+      <div class="card"><h3>Note 3</h3><p>Notes can be dynamic based on user input from login.</p></div>
+      <div class="card"><h3>Note 4</h3><p>Use this template to expand your dashboard.</p></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDP3tSd4wanWKxjEE_clNiSw1bzIos8dnM",
+      authDomain: "notes-app-67faa.firebaseapp.com",
+      projectId: "notes-app-67faa",
+      storageBucket: "notes-app-67faa.firebasestorage.app",
+      messagingSenderId: "331050529283",
+      appId: "1:331050529283:web:3df822bb2ebf8e3e5e9436",
+      measurementId: "G-VK49P39KSW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Display logged-in user name/email
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const name = user.displayName || user.email;
+        document.getElementById("welcomeMsg").textContent = `Welcome, ${name}!`;
+      } else {
+        // Redirect to login if not logged in
+        window.location.href = "login.html";
+      }
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").onclick = () => {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      }).catch((error) => {
+        alert(error.message);
+      });
+    };
+  </script>
+
+</body>
+</html>
